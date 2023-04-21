@@ -656,15 +656,15 @@ Kd - дифференциальный коэффициент. +
 === Передача данных по ModBus
 ModBus регистры являются 16-битными.
 Адреса регистров:
-▪ Температура: (Input Registers) : 30001 (Float32)
-▪ Расход: (Input Registers) : 30003 (Float32)
-▪ code: (Input Registers) : 30005 (Float32)
-▪ duty: (Input Registers) : 30007 (Float32)
-▪ Аt: (Holding Registers) : 40001 (Float32)
-▪ Bt: (Holding Registers) : 40003 (Float32)
-▪ Ct: (Holding Registers) : 40005 (Float32)
-▪ Ai: (Holding Registers) : 40007 (Float32)
-▪ Kp: (Holding Registers) : 40009 (Float32)
-▪ Ki: (Holding Registers) : 40011 (Float32)
-▪ Kd: (Holding Registers) : 40013 (Float32)
+ - Температура: (Input Registers) : 30001 (Float32)
+ - Расход: (Input Registers) : 30003 (Float32)
+ - code: (Input Registers) : 30005 (Float32)
+ - duty: (Input Registers) : 30007 (Float32)
+ - Аt: (Holding Registers) : 40001 (Float32)
+ - Bt: (Holding Registers) : 40003 (Float32)
+ - Ct: (Holding Registers) : 40005 (Float32)
+ - Ai: (Holding Registers) : 40007 (Float32)
+ - Kp: (Holding Registers) : 40009 (Float32)
+ - Ki: (Holding Registers) : 40011 (Float32)
+ - Kd: (Holding Registers) : 40013 (Float32)
 
