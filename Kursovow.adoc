@@ -13,6 +13,7 @@ title: Курсовой
 :toc-title: Содержание
 :toc:
 
+[#_курсовой]
 = Курсовой
 
 [text-right]
@@ -656,6 +657,7 @@ Kd - дифференциальный коэффициент. +
 === Передача данных по ModBus
 ModBus регистры являются 16-битными.
 Адреса регистров:
+
  - Температура: (Input Registers) : 30001 (Float32)
  - Расход: (Input Registers) : 30003 (Float32)
  - code: (Input Registers) : 30005 (Float32)
@@ -667,4 +669,73 @@ ModBus регистры являются 16-битными.
  - Kp: (Holding Registers) : 40009 (Float32)
  - Ki: (Holding Registers) : 40011 (Float32)
  - Kd: (Holding Registers) : 40013 (Float32)
+
+== Глава 2. Дизайн программы
+Проанализировав требования, составим дизайн программы, обозначим классы и их методы.
+
+
+[plantuml]
+
+----
+
+class IMeasureParameter
+{
+  Calculate(in int32_t code): float
+}
+
+class Temperature
+{
+  IsMeasureTemperature(in int32_t code): float
+}
+class WaterConsumtion
+{
+IsMeasureConsumtion(in int32_t code): float
+}
+class Current
+{
+IsMeasureCurrent(in int32_t code): float
+}
+
+IMeasureParameter<|--Temperature
+IMeasureParameter<|--WaterConsumtion
+IMeasureParameter<|--Current
+
+class ADC
+{
+StartConversation():void
+GetResult():int32_t
+IsConversionComplete():bool
+TransmitData():void
+}
+
+class PWM
+{
+RecalculateCCR():void
+Send():void
+}
+
+class Flowmeter
+{
+GetResult():int32_t
+IsCapturePulsComplete():bool
+}
+class Modbus
+{
+GetData():void
+Send():void
+IsSendDataComplete():bool
+}
+
+Temperature o--ADC
+Current o--PWM
+WaterConsumtion o--Flowmeter
+
+ADC o--Modbus
+PWM o--Modbus
+Flowmeter o--Modbus
+----
+
+
+
+
 
