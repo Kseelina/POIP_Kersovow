@@ -546,10 +546,10 @@ image::OutputPA11.png[]
 
 .Включение таймера TIM1
 image::TIM1_RCC_APB2ENR.png[]
-Бит 0 TIM1EN: часы TIM1 включены
+Бит 0 TIM1EN: таймер TIM1 включены
 
-- 0: Таймер TIM1 отключены +
-- *1: Таймер TIM1 включены* +
+- 0: Таймер TIM1 отключён +
+- *1: Таймер TIM1 включён* +
 
 .Сброс таймера TIM1
 image::TIM1_RCC_APB2RSTR.png[]
