@@ -648,16 +648,140 @@ Kd - дифференциальный коэффициент. +
 работы расходомера используется плата STM32F103C8T6.
 Имитация производится при помощи частотно-импульсной модуляции (ЧИМ).
 Для платы STM32F411RE потребуется таймер в режиме захвата,
-а для платы STM32F103C8T6
+а для платы STM32F103C8T6 ЧИМ.
 
-Канал CC4 настроен как вход:
-Этот бит определяет, действительно ли можно выполнить захват значения счетчика на входе.
-регистр захвата/сравнения 1 (TIMx_CCR4) или нет.
+Буду использовать первый канал канал таймера TIM4.
+Поэтому после подачи тактирования на пины GPIOB (RCC::AHB1ENR::GPIOBEN::Enable::Set())
+назначу пин PB6 альтернативным (GPIOB::MODER::MODER6::Alternate::Set()).
+
+.Вывод PB6
+image::OutputPB6.png[]
+
+.Включение таймера TIM4
+image::TIM4_RCC_APB2ENR.png[]
+Бит 0 TIM4EN: таймер TIM4 включены
+
+- 0: Таймер TIM4 отключён +
+- *1: Таймер TIM4 включён* +
+
+.Сброс таймера TIM4
+image::TIM4_RCC_APB2RSTR.png[]
+Бит 0 TIM4RST: сброс TIM4
+
+- 0: не сбрасывает TIM4
+- *1: сбрасывает TIM4*
+
+Таймер TIM4 канал 1 должен работать в режиме захвата,
+т.е. данный вывод будет фиксировать изменение логического уровня сигнала,
+приходящего на пин PB6.
+
+.TIM4_CCMR1
+image::TIM4_CCMR1.png[]
+Биты 1:0 CC1S: Захват/Сравнение 1 выбор +
+Это битовое поле определяет направление канала (вход/выход),
+а также используемый вход.
+
+- 00: канал CC1 настроен как выход
+- *01: канал CC1 настроен как вход, IC1 отображается на TI1*
+- 10: канал CC1 настроен как вход, IC1 отображается на TI2
+- 11: Канал CC1 настроен как вход, IC1 отображается на TRC.
+Этот режим работает,
+только если вход внутреннего триггера выбирается через бит TS (регистр TIMx_SMCR). +
+Примечание. Биты CC1S доступны для записи,
+только когда канал выключен (CC1E = «0» в TIM4_CCER).
+
+Биты 3:2 IC1PSC: Предварительный делитель захвата входа 1 +
+Это битовое поле определяет отношение предварительного делителя,
+действующего на вход CC1 (IC1). +
+Предварительный делитель сбрасывается, как только CC1E=’0’ (регистр TIMx_CCER).
+
+- *00: нет предварительного делителя, захват выполняется каждый раз,
+когда на входе захвата обнаруживается фронт*
+- 01: захват выполняется один раз каждые 2 события
+- 10: захват производится один раз каждые 4 события
+- 11: захват производится один раз каждые 8 событий
+
+Биты 7:4 IC1F[3:0]: входной фильтр захвата +
+Это битовое поле определяет частоту,
+используемую для выборки входного сигнала TIM1,
+и длину применяемого цифрового фильтра.
+Цифровой фильтр состоит из счетчика событий,
+в котором требуется N последовательных событий, чтобы
+проверить переход на выходе:
+
+- 0000: Нет фильтра, выборка выполняется в fDTS
+- 0001: fSAMPLING=fCK_INT, N=2
+- *0010: fSAMPLING=fCK_INT, N=4*
+- 0011: fSAMPLING=fCK_INT, N=8
+- 0100: fSAMPLING=fDTS/2, N=6
+- 0101: fSAMPLING=fDTS/2, N=8
+- 0110: fSAMPLING=fDTS/4, N=6
+- 0111: fSAMPLING=fDTS/4, N=8
+- 1000: fSAMPLING=fDTS/8, N=6
+- 1001: fSAMPLING=fDTS/8, N=8
+- 1010: fSAMPLING=fDTS/16, N=5
+- 1011: fSAMPLING=fDTS/16, N=6
+- 1100: fSAMPLING=fDTS/16, N=8
+- 1101: fSAMPLING=fDTS/32, N=5
+- 1110: fSAMPLING=fDTS/32, N=6
+- 1111: fSAMPLING=fDTS/32, N=8
+
+.Регистр захвата/сравнения таймера TIM4
+image::TIM4_CCER.png[]
+Бит 0 CC1E: Захват/Сравнение
+Канал CC1 настроен как вход:
+Этот бит определяет,
+действительно ли можно выполнить захват значения счетчика на входе.
 
 - 0: Захват отключен
 - *1: Захват включен*
 
+Бит 1 CC1P: захват/сравнение полярности выхода +
+Канал CC1 настроен как вход:
+Биты CC1NP/CC1P выбирают активную полярность TI1FP1 и TI2FP1 для запуска или захвата.
 
+- 00: неинвертированный/нарастающий фронт +
+Схема чувствительна к переднему фронту TIxFP1.
+- 01: инвертированный/задний фронт +
+Схема чувствительна к заднему фронту TIxFP1
+- 10: зарезервировано, не используйте эту конфигурацию.
+- *11: не перевернутый/оба края*
+
+.Регистр TIM4_DIER
+image::TIM4_DIER.png[]
+
+Бит 1 CC1IE: разрешение прерывания захвата/сравнения
+
+- 0: прерывание CC1 отключено
+- *1: прерывание CC1 разрешено*
+
+Бит 9 CC1DE: разрешение запроса захвата/сравнения DMA
+
+- 0: запрос DMA CC1 отключен
+- *1: Запрос DMA CC1 включен*
+
+После того как произошёл захват формируется событие захвата,
+которое устанавливает соответствующий флаг в регистре TIM4_EGR.
+Это может привести к генерации прерывания и запросу DMA, если они разрешены в регистре DIER.
+
+.Канал 2
+image::DMA_DMA1 и TIM4.png[]
+
+DMA1 настраивается аналогично DMA2.
+
+.Регистр конфигурации потока DMA DMA_SxCR
+image::DMA_SxCR.png[]
+
+Биты 27:25 CHSEL[2:0]: Выбор канала.
+
+- 000: канал 0
+- 001: канал 1
+- *010: канал 2*
+- 011: канал 3
+- 100: канал 4
+- 101: канал 5
+- 110: канал 6
+- 111: канал 7
 
 === Передача данных по ModBus
 ModBus регистры являются 16-битными.
@@ -677,7 +801,27 @@ ModBus регистры являются 16-битными.
 
 == Глава 2. Дизайн программы
 Проанализировав требования, составим дизайн программы, обозначим классы и их методы.
+*ITread*  - класс задач ОСРВ.
+Всего будет 4 задачи: +
+*TemperatureTask* - задача, которая получает code с АЦП раз в секунду. +
+*FlowTask* - задача, которая получает code с расхода (таймера TIM4) раз в секунду. +
+*CurrentPowerRegulationTask* - подаёт на вывод напряжение раз в секунду. +
+*DataTransferTask* - передаёт/получает данные раз в секунду.
 
+В архитектуре присутствуют следующие классы: +
+*Modbus* - передаёт/получает данные по ModBus. +
+*Temperature* - по code с АЦП рассчитывает температуру. +
+*Flowmeter* - запускает/останалвивает режим захвата Таймера и
+формирует code с расходомера. +
+*WaterConsumtion* - по code с расходомера расчитывает скорость потока воды. +
+*CurrentControler* - по заданной и текущей температурам, а также по скорости потока
+расчитывает силу тока. +
+*PWM* - по силе тока расчитывает коэффициент заполенния CCR.
+
+В архитектуре присутствуют интерфейсы: +
+*IMeasureParameter* - который имеет переопределяющийся метод *Calculated*.
+ Данный метод по code расчитывает значения. +
+*IDataSource* - Запрашивает данные.
 
 [plantuml]
 
@@ -686,51 +830,62 @@ class ITread
 {
 
 }
+
 class TemperatureTask
 {
 
 }
+
 class FlowTask
 {
 
 }
+
 class CurrentPowerRegulationTask
 {
 
 }
-class ModbusTask
+
+class DataTransferTask
 {
 
 }
 
-class IMeasureParameter
+ITread <|-- TemperatureTask
+ITread <|-- FlowTask
+ITread <|-- CurrentPowerRegulationTask
+ITread <|-- DataTransferTask
+
+
+
+class Modbus
 {
-  Calculate(in int32_t code): float
+GetData():void
+Send():void
+IsSendDataComplete():bool
 }
 
 class Temperature
 {
-  IsMeasureTemperature(in int32_t code): float
-}
-class WaterConsumtion
-{
-IsMeasureConsumtion(in int32_t code): float
-}
-class Current
-{
-IsMeasureCurrent(in int32_t code): float
+  IMeasureParameter(int32_t code): float
 }
 
-IMeasureParameter<|--Temperature
-IMeasureParameter<|--WaterConsumtion
-IMeasureParameter<|--Current
-
-class ADC
+class Flowmeter
 {
 StartConversation():void
+IsCapturePulsComplete():bool
 GetResult():int32_t
-IsConversionComplete():bool
-TransmitData():void
+StopConversation():void
+}
+
+class WaterConsumtion
+{
+IMeasureParameter(int32_t code): float
+}
+
+class CurrentControler
+{
+Calculated( float CurrentTemperature, float SetTemperature, float FlowRate): float
 }
 
 class PWM
@@ -739,25 +894,34 @@ RecalculateCCR():void
 Send():void
 }
 
-class Flowmeter
-{
-GetResult():int32_t
-IsCapturePulsComplete():bool
-}
-class Modbus
-{
-GetData():void
-Send():void
-IsSendDataComplete():bool
-}
 
-Temperature o--ADC
-Current o--PWM
+
+class IMeasureParameter
+{
+   Calculated (int32_t code) float
+}
+class IDataSource
+{
+   GetData (): void
+}
+IDataSource o-- IMeasureParameter
+IDataSource o-- CurrentControler
+IDataSource o-- PWM
+
+TemperatureTask o-- Temperature
+CurrentPowerRegulationTask o-- PWM
+FlowTask o-- WaterConsumtion
+DataTransferTask o-- Modbus
+
+PWM o-- CurrentControler
 WaterConsumtion o--Flowmeter
 
-ADC o--Modbus
-PWM o--Modbus
-Flowmeter o--Modbus
+CurrentControler o-- IMeasureParameter
+
+IMeasureParameter <|-- Temperature
+IMeasureParameter <|-- WaterConsumtion
+Modbus o-- IDataSource
+
 ----
 
 
