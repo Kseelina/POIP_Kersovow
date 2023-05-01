@@ -1,0 +1,26 @@
+R:\POIP\POIP\POIP2\Kurs\POIP_Kersovow\Debug\BrowseInfo\Rtos\FreeRtos\event_groups.pbi: \
+  R:\POIP\POIP\POIP2\Kurs\POIP_Kersovow\Rtos\FreeRtos\event_groups.c \
+  R:\Program\IAR\arm\inc\c\stdlib.h R:\Program\IAR\arm\inc\c\ycheck.h \
+  R:\Program\IAR\arm\inc\c\yvals.h \
+  R:\Program\IAR\arm\inc\c\DLib_Defaults.h \
+  R:\Program\IAR\arm\inc\c\DLib_Config_Full.h \
+  R:\Program\IAR\arm\inc\c\DLib_Product.h \
+  R:\Program\IAR\arm\inc\c\ysizet.h \
+  R:\Program\IAR\arm\inc\c\DLib_Product_stdlib.h \
+  R:\POIP\POIP\POIP2\Kurs\POIP_Kersovow\Rtos\FreeRtos\include\FreeRTOS.h \
+  R:\Program\IAR\arm\inc\c\stddef.h R:\Program\IAR\arm\inc\c\stdint.h \
+  R:\POIP\POIP\POIP2\Kurs\POIP_Kersovow\Rtos\FreeRtos\include\..\FreeRTOSConfig.h \
+  R:\POIP\POIP\POIP2\Kurs\POIP_Kersovow\Rtos\FreeRtos\include\projdefs.h \
+  R:\POIP\POIP\POIP2\Kurs\POIP_Kersovow\Rtos\FreeRtos\include\portable.h \
+  R:\POIP\POIP\POIP2\Kurs\POIP_Kersovow\Rtos\FreeRtos\include\deprecated_definitions.h \
+  R:\POIP\POIP\POIP2\Kurs\POIP_Kersovow\Rtos\FreeRtos\portable\IAR\ARM_CM4F\portmacro.h \
+  R:\Program\IAR\arm\inc\c\aarch32\intrinsics.h \
+  R:\Program\IAR\arm\inc\c\aarch32\iccarm_builtin.h \
+  R:\Program\IAR\arm\inc\c\aarch32\iar_intrinsics_common.h \
+  R:\POIP\POIP\POIP2\Kurs\POIP_Kersovow\Rtos\FreeRtos\include\mpu_wrappers.h \
+  R:\POIP\POIP\POIP2\Kurs\POIP_Kersovow\Rtos\FreeRtos\include\task.h \
+  R:\POIP\POIP\POIP2\Kurs\POIP_Kersovow\Rtos\FreeRtos\include\list.h \
+  R:\POIP\POIP\POIP2\Kurs\POIP_Kersovow\Rtos\FreeRtos\include\timers.h \
+  R:\POIP\POIP\POIP2\Kurs\POIP_Kersovow\Rtos\FreeRtos\include\task.h \
+  R:\POIP\POIP\POIP2\Kurs\POIP_Kersovow\Rtos\FreeRtos\include\event_groups.h \
+  R:\POIP\POIP\POIP2\Kurs\POIP_Kersovow\Rtos\FreeRtos\include\timers.h
