@@ -1,0 +1,10 @@
+R:\POIP\POIP\POIP2\Kurs\POIP_Kersovow\Debug\BrowseInfo\main.pbi: \
+  R:\POIP\POIP\POIP2\Kurs\POIP_Kersovow\main.cpp \
+  R:\POIP\POIP\POIP2\Kurs\POIP_Kersovow\Applications\Parameters\Temperature.h \
+  R:\POIP\POIP\POIP2\Kurs\POIP_Kersovow\Applications\Parameters\IMeasureParameter.h \
+  R:\POIP\POIP\POIP2\Kurs\POIP_Kersovow\Hardware\Flowmeter\Flowmeter.h \
+  R:\POIP\POIP\POIP2\Kurs\POIP_Kersovow\Applications\Parameters\WaterConsumtion.h \
+  R:\POIP\POIP\POIP2\Kurs\POIP_Kersovow\Applications\Parameters\CurrentControler.h \
+  R:\POIP\POIP\POIP2\Kurs\POIP_Kersovow\Hardware\PWM\PWM.h \
+  R:\POIP\POIP\POIP2\Kurs\POIP_Kersovow\Applications\DataTransfer\Modbus\Modbus.h \
+  R:\POIP\POIP\POIP2\Kurs\POIP_Kersovow\Applications\DataTransfer\IDataSource.h

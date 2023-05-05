@@ -1,0 +1,208 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project>
+    <fileVersion>5</fileVersion>
+    <fileChecksum>2237888347</fileChecksum>
+    <configuration>
+        <name>Debug</name>
+        <outputs>
+            <file>$PROJ_DIR$\Thread\CurrentPowerRegulationTask.h</file>
+            <file>$PROJ_DIR$\Applications\Parameters\CurrentControler.h</file>
+            <file>$PROJ_DIR$\main.cpp</file>
+            <file>$PROJ_DIR$\Thread\DataTransferTask.h</file>
+            <file>$PROJ_DIR$\Hardware\PWM\PWM.h</file>
+            <file>$PROJ_DIR$\Thread\FlowTask.h</file>
+            <file>$TOOLKIT_DIR$\inc\c\DLib_Defaults.h</file>
+            <file>$TOOLKIT_DIR$\inc\c\string.h</file>
+            <file>$TOOLKIT_DIR$\inc\c\ycheck.h</file>
+            <file>$TOOLKIT_DIR$\inc\c\stdint.h</file>
+            <file>$TOOLKIT_DIR$\inc\c\ysizet.h</file>
+            <file>$TOOLKIT_DIR$\inc\c\stddef.h</file>
+            <file>$TOOLKIT_DIR$\inc\c\aarch32\intrinsics.h</file>
+            <file>$PROJ_DIR$\Thread\TemperatureTask.h</file>
+            <file>$PROJ_DIR$\Applications\Parameters\WaterConsumtion.h</file>
+            <file>$TOOLKIT_DIR$\inc\c\DLib_Product_string.h</file>
+            <file>$TOOLKIT_DIR$\inc\c\yvals.h</file>
+            <file>$TOOLKIT_DIR$\inc\c\DLib_Product.h</file>
+            <file>$TOOLKIT_DIR$\inc\c\DLib_Config_Full.h</file>
+            <file>$TOOLKIT_DIR$\inc\c\aarch32\iccarm_builtin.h</file>
+            <file>$TOOLKIT_DIR$\inc\c\aarch32\iar_intrinsics_common.h</file>
+            <file>$TOOLKIT_DIR$\inc\c\stdlib.h</file>
+            <file>$TOOLKIT_DIR$\inc\c\DLib_Product_stdlib.h</file>
+            <file>$PROJ_DIR$\Rtos\FreeRtos\event_groups.c</file>
+            <file>$PROJ_DIR$\Rtos\FreeRtos\FreeRTOSConfig.h</file>
+            <file>$PROJ_DIR$\Rtos\FreeRtos\tasks.c</file>
+            <file>$PROJ_DIR$\Rtos\FreeRtos\queue.c</file>
+            <file>$PROJ_DIR$\Rtos\FreeRtos\croutine.c</file>
+            <file>$PROJ_DIR$\Rtos\FreeRtos\timers.c</file>
+            <file>$PROJ_DIR$\Rtos\FreeRtos\list.c</file>
+            <file>$PROJ_DIR$\Applications\DataTransfer\Modbus\Modbus.h</file>
+            <file>$PROJ_DIR$\Debug\Obj\Rtos\FreeRtos\portable\IAR\ARM_CM4F\port.o</file>
+            <file>$PROJ_DIR$\Debug\Obj\Rtos\FreeRtos\tasks.o</file>
+            <file>$PROJ_DIR$\Debug\Obj\Rtos\FreeRtos\croutine.o</file>
+            <file>$PROJ_DIR$\Debug\Obj\Rtos\FreeRtos\portable\IAR\ARM_CM4F\portasm.o</file>
+            <file>$PROJ_DIR$\Debug\Obj\Rtos\FreeRtos\event_groups.o</file>
+            <file>$PROJ_DIR$\Debug\Obj\Rtos\FreeRtos\queue.o</file>
+            <file>$PROJ_DIR$\Debug\Obj\Rtos\FreeRtos\list.o</file>
+            <file>$PROJ_DIR$\Debug\Obj\Rtos\FreeRtos\timers.o</file>
+            <file>$PROJ_DIR$\Applications\DataTransfer\IDataSource.h</file>
+            <file>$PROJ_DIR$\Rtos\FreeRtos\include\event_groups.h</file>
+            <file>$PROJ_DIR$\Rtos\FreeRtos\include\StackMacros.h</file>
+            <file>$PROJ_DIR$\Rtos\FreeRtos\include\deprecated_definitions.h</file>
+            <file>$PROJ_DIR$\Rtos\FreeRtos\portable\IAR\ARM_CM4F\port.c</file>
+            <file>$PROJ_DIR$\Rtos\FreeRtos\include\projdefs.h</file>
+            <file>$PROJ_DIR$\Rtos\FreeRtos\include\list.h</file>
+            <file>$PROJ_DIR$\Rtos\FreeRtos\include\queue.h</file>
+            <file>$PROJ_DIR$\Rtos\FreeRtos\include\mpu_wrappers.h</file>
+            <file>$PROJ_DIR$\Rtos\FreeRtos\include\task.h</file>
+            <file>$PROJ_DIR$\Rtos\FreeRtos\portable\IAR\ARM_CM4F\portmacro.h</file>
+            <file>$PROJ_DIR$\Rtos\FreeRtos\include\timers.h</file>
+            <file>$PROJ_DIR$\Rtos\FreeRtos\include\portable.h</file>
+            <file>$PROJ_DIR$\Rtos\FreeRtos\include\croutine.h</file>
+            <file>$PROJ_DIR$\Rtos\FreeRtos\include\FreeRTOS.h</file>
+            <file>$PROJ_DIR$\Rtos\FreeRtos\portable\IAR\ARM_CM4F\portasm.s</file>
+            <file>$PROJ_DIR$\Hardware\Flowmeter\Flowmeter.h</file>
+            <file>$PROJ_DIR$\Applications\Parameters\IMeasureParameter.h</file>
+            <file>$PROJ_DIR$\Applications\Parameters\Temperature.h</file>
+        </outputs>
+        <file>
+            <name>$PROJ_DIR$\main.cpp</name>
+            <inputs>
+                <tool>
+                    <name>ICCARM</name>
+                    <file> 57 56 55 14 1 4 30 39</file>
+                </tool>
+            </inputs>
+        </file>
+        <file>
+            <name>$PROJ_DIR$\Rtos\FreeRtos\event_groups.c</name>
+            <outputs>
+                <tool>
+                    <name>ICCARM</name>
+                    <file> 35</file>
+                </tool>
+            </outputs>
+            <inputs>
+                <tool>
+                    <name>ICCARM</name>
+                    <file> 21 8 16 6 18 17 10 22 53 11 9 24 44 51 42 49 12 19 20 47 48 45 50 40</file>
+                </tool>
+            </inputs>
+        </file>
+        <file>
+            <name>$PROJ_DIR$\Rtos\FreeRtos\tasks.c</name>
+            <outputs>
+                <tool>
+                    <name>ICCARM</name>
+                    <file> 32</file>
+                </tool>
+            </outputs>
+            <inputs>
+                <tool>
+                    <name>ICCARM</name>
+                    <file> 21 8 16 6 18 17 10 22 7 15 53 11 9 24 44 51 42 49 12 19 20 47 48 45 50 41</file>
+                </tool>
+            </inputs>
+        </file>
+        <file>
+            <name>$PROJ_DIR$\Rtos\FreeRtos\queue.c</name>
+            <outputs>
+                <tool>
+                    <name>ICCARM</name>
+                    <file> 36</file>
+                </tool>
+            </outputs>
+            <inputs>
+                <tool>
+                    <name>ICCARM</name>
+                    <file> 21 8 16 6 18 17 10 22 7 15 53 11 9 24 44 51 42 49 12 19 20 47 48 45 46</file>
+                </tool>
+            </inputs>
+        </file>
+        <file>
+            <name>$PROJ_DIR$\Rtos\FreeRtos\croutine.c</name>
+            <outputs>
+                <tool>
+                    <name>ICCARM</name>
+                    <file> 33</file>
+                </tool>
+            </outputs>
+            <inputs>
+                <tool>
+                    <name>ICCARM</name>
+                    <file> 53 11 8 16 6 18 17 10 9 24 44 51 42 49 12 19 20 47 48 45 52</file>
+                </tool>
+            </inputs>
+        </file>
+        <file>
+            <name>$PROJ_DIR$\Rtos\FreeRtos\timers.c</name>
+            <outputs>
+                <tool>
+                    <name>ICCARM</name>
+                    <file> 38</file>
+                </tool>
+            </outputs>
+            <inputs>
+                <tool>
+                    <name>ICCARM</name>
+                    <file> 21 8 16 6 18 17 10 22 53 11 9 24 44 51 42 49 12 19 20 47 48 45 46 50</file>
+                </tool>
+            </inputs>
+        </file>
+        <file>
+            <name>$PROJ_DIR$\Rtos\FreeRtos\list.c</name>
+            <outputs>
+                <tool>
+                    <name>ICCARM</name>
+                    <file> 37</file>
+                </tool>
+            </outputs>
+            <inputs>
+                <tool>
+                    <name>ICCARM</name>
+                    <file> 21 8 16 6 18 17 10 22 53 11 9 24 44 51 42 49 12 19 20 47 45</file>
+                </tool>
+            </inputs>
+        </file>
+        <file>
+            <name>$PROJ_DIR$\Rtos\FreeRtos\portable\IAR\ARM_CM4F\port.c</name>
+            <outputs>
+                <tool>
+                    <name>ICCARM</name>
+                    <file> 31</file>
+                </tool>
+            </outputs>
+            <inputs>
+                <tool>
+                    <name>ICCARM</name>
+                    <file> 12 19 16 6 18 17 20 53 11 8 10 9 24 44 51 42 49 47 48 45</file>
+                </tool>
+            </inputs>
+        </file>
+        <file>
+            <name>$PROJ_DIR$\Rtos\FreeRtos\portable\IAR\ARM_CM4F\portasm.s</name>
+            <outputs>
+                <tool>
+                    <name>AARM</name>
+                    <file> 34</file>
+                </tool>
+            </outputs>
+            <inputs>
+                <tool>
+                    <name>AARM</name>
+                    <file> 24</file>
+                </tool>
+            </inputs>
+        </file>
+        <forcedrebuild>
+            <name>[REBUILD_ALL]</name>
+        </forcedrebuild>
+    </configuration>
+    <configuration>
+        <name>Release</name>
+        <outputs />
+        <forcedrebuild>
+            <name>[MULTI_TOOL]</name>
+            <tool>ILINK</tool>
+        </forcedrebuild>
+    </configuration>
+</project>
