@@ -222,8 +222,8 @@ image::ADC_CR2.png[]
 
 Бит 30 SWSTART: Начать преобразование обычных каналов
 
--*0: Сбросить состояние*
-- 1: Запускает преобразование обычных каналов*
+- *0: Сбросить состояние*
+- 1: Запускает преобразование обычных каналов* +
 Примечание.  +
 Этот бит можно установить, только если ADON = 1, в противном случае
 преобразование не запускается.
@@ -808,12 +808,13 @@ ModBus регистры являются 16-битными.
 ----
 class ITread
 {
-
+  + Execute(): void
 }
 
 class TemperatureTask
 {
-
+  + TemperatureTask(parameter: IMeasureParameter)
+  - _parameter: IMeasureParameter
 }
 
 class FlowTask
@@ -845,7 +846,11 @@ class Modbus
 
 class Temperature
 {
-
+  + Temperature(resistor: IDataSource)
+  - At: float
+  - Bt: float
+  - Ct: float
+  - _resistor: IDataSource
 }
 
 class Flowmeter
@@ -872,27 +877,54 @@ class PWM
 
 class IMeasureParameter
 {
-   Calculate (): float
+   + Calculate (): float
 }
+
 class IDataSource
 {
+  + GetData(): float
+}
 
+class Resistor
+{
+  + Resistor(code: IDataSource)
+  - k: float
+  - b: float
+  - _code: IDataSource&
+}
+
+class ADC
+{
+  + ADC()
+  + Start():void
+  - code: uint32_t
+}
+
+class DMA
+{
+  + Configure(variableAddress: uint32_t ): void
+  + Start(): void
+  + Disable(): void
 }
 
 
 TemperatureTask o-- IMeasureParameter
-CurrentPowerRegulationTask o-- PWM
-FlowTask o-- IMeasureParameter
-DataTransferTask o-- Modbus
+IMeasureParameter <|-- Temperature
 
-PWM o-- CurrentControler
+FlowTask o-- IMeasureParameter
+IMeasureParameter <|-- WaterConsumption
 WaterConsumption o--Flowmeter
 
+CurrentPowerRegulationTask o-- PWM
+PWM o-- CurrentControler
 CurrentControler o-- IMeasureParameter
 
-IMeasureParameter <|-- Temperature
-IMeasureParameter <|-- WaterConsumption
+DataTransferTask o-- Modbus
 Modbus o-- IDataSource
+Temperature o-- IDataSource
+IDataSource <|-- Resistor
+IDataSource <|-- ADC
+
 
 ----
 
