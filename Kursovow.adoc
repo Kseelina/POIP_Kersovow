@@ -678,7 +678,7 @@ image::TIM3_CCMR1.png[]
 
 Биты 7:4 IC1F[3:0]: входной фильтр захвата +
 Это битовое поле определяет частоту,
-используемую для выборки входного сигнала TIM1,
+используемую для выборки входного сигнала TIM3,
 и длину применяемого цифрового фильтра.
 Цифровой фильтр состоит из счетчика событий,
 в котором требуется N последовательных событий, чтобы
@@ -712,7 +712,7 @@ image::TIM3_CCER.png[]
 - *1: Захват включен*
 
 Бит 1 CC1P: захват/сравнение полярности выхода +
-Канал CC1 настроен как вход:
+Канал CC1 настроен как вход: +
 Биты CC1NP/CC1P выбирают активную полярность TI1FP1 и TI2FP1 для запуска или захвата.
 
 - 00: неинвертированный/нарастающий фронт +
@@ -813,13 +813,14 @@ class ITread
 
 class TemperatureTask
 {
-  + TemperatureTask(parameter: IMeasureParameter)
   - _parameter: IMeasureParameter
+  + TemperatureTask(parameter: IMeasureParameter)
 }
 
 class FlowTask
 {
-
+  - _parameter: IMeasureParameter
+  + FlowTask(parameter: IMeasureParameter)
 }
 
 class CurrentPowerRegulationTask
@@ -837,28 +838,7 @@ ITread <|-- FlowTask
 ITread <|-- CurrentPowerRegulationTask
 ITread <|-- DataTransferTask
 
-
-
-class Modbus
-{
-
-}
-
-class Temperature
-{
-  + Temperature(resistor: IDataSource)
-  - At: float
-  - Bt: float
-  - Ct: float
-  - _resistor: IDataSource
-}
-
-class Flowmeter
-{
-
-}
-
-class WaterConsumption
+class PWM
 {
 
 }
@@ -868,16 +848,31 @@ class CurrentControler
 
 }
 
-class PWM
+class IMeasureParameter
+{
+   + Calculate (): float
+}
+
+class Modbus
 {
 
 }
 
-
-
-class IMeasureParameter
+class WaterConsumption
 {
-   + Calculate (): float
+  - s: int16_t
+  - R: float
+  - _numberTopsFronts: IDataSource
+  + Flow(numberTopsFronts: IDataSource)
+}
+
+class Temperature
+{
+  - At: float
+  - Bt: float
+  - Ct: float
+  - _resistor: IDataSource
+  + Temperature(resistor: IDataSource)
 }
 
 class IDataSource
@@ -885,19 +880,27 @@ class IDataSource
   + GetData(): float
 }
 
+class Flowmeter
+{
+  - numberTopsFronts: uint32_t
+  + Flowmeter()
+  + Start():void
+  + Stop():void
+}
+
 class Resistor
 {
-  + Resistor(code: IDataSource)
   - k: float
   - b: float
   - _code: IDataSource&
+  + Resistor(code: IDataSource)
 }
 
 class ADC
 {
+  - code: uint32_t
   + ADC()
   + Start():void
-  - code: uint32_t
 }
 
 class DMA
@@ -910,10 +913,14 @@ class DMA
 
 TemperatureTask o-- IMeasureParameter
 IMeasureParameter <|-- Temperature
+Temperature o-- IDataSource
+IDataSource <|-- Resistor
+IDataSource <|-- ADC
 
 FlowTask o-- IMeasureParameter
 IMeasureParameter <|-- WaterConsumption
-WaterConsumption o--Flowmeter
+WaterConsumption o-- IDataSource
+IDataSource <|-- Flowmeter
 
 CurrentPowerRegulationTask o-- PWM
 PWM o-- CurrentControler
@@ -921,9 +928,7 @@ CurrentControler o-- IMeasureParameter
 
 DataTransferTask o-- Modbus
 Modbus o-- IDataSource
-Temperature o-- IDataSource
-IDataSource <|-- Resistor
-IDataSource <|-- ADC
+
 
 
 ----
