@@ -4,7 +4,8 @@
 
 class IDataSource
 {
-  void GetData () ;
+public:
+  virtual float GetData() = 0;
 };
 
 #endif

@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <workspace>
     <project>
+        <path>$WS_DIR$\..\..\AnalogDiploma\KorundDisMicro.ewp</path>
+    </project>
+    <project>
         <path>$WS_DIR$\Kursovow.ewp</path>
     </project>
     <batchBuild />
