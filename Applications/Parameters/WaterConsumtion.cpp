@@ -1,13 +1,14 @@
 #include "WaterConsumtion.h"
 
-
-WaterConsumtion::WaterConsumtion(IDataSource& numberTopsFronts): _numberTopsFronts(numberTopsFronts) 
- {
+// контруктор, содержащий ссылку на данные о количесвте передних фронтов, прошедших за секунду
+WaterConsumtion::WaterConsumtion(IDataSource& dataSource): _dataSource(dataSource) 
+{
    
- }
+}
 
+// Метод, который расчитывает скорость потока в литрах/минуту
 float WaterConsumtion::Calculate()
 {
- float flowRate = (_numberTopsFronts.GetData() * s) / R ;
+ float flowRate = (_dataSource.GetData() * s) / R ;
  return flowRate;
 }

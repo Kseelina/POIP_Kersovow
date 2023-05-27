@@ -1,7 +1,7 @@
 #include "rccregisters.hpp"                       // Для модуля тактирования RCC
 #include "dma1registers.hpp"                       // Для подключения ДМА
 #include "dma2registers.hpp"                      // Для подключения ДМА
-
+#include "ConfigDMA.h"
 #include "nvicregisters.hpp"                      // для объявления глобальных прерываний
 #include "interrupthandler.hpp"                   // библиотека векторов прерываний
 //#include "StartUp.cpp"                            // для прерываний  
@@ -21,11 +21,10 @@
 #include "ADC.h"
 #include "adccommonregisters.hpp"
 //=================================Расход=======================================
-#include "Front.h"
 #include "Flowmeter.h"   
 #include "WaterConsumtion.h"  
 #include "tim3registers.hpp"         // библиотека для TIM3
-#include "TIM3_CCR.h"
+#include "TimerCCR.h"
 //=================================ШИМ==========================================
 #include "CurrentControler.h"   
 #include "PWM.h"  
@@ -44,7 +43,7 @@ std::uint32_t OneMillisecondRation = 1000U; // коэффициент деления
 std::uint32_t Timer3Prescaller = SystemCoreClock / OneMillisecondRation; // 1 млсек
 
 
-//----------------------------Создание объектов---------------------------------  
+//----------------------------Создание объектов---------------------------------   
   ADC adc;
   Resistor resistor(static_cast<IDataSource&>(adc));
   Temperature temperature(static_cast<IDataSource&>(resistor)); // создание обекта для расчёта температуры
@@ -60,7 +59,7 @@ std::uint32_t Timer3Prescaller = SystemCoreClock / OneMillisecondRation; // 1 мл
 
 int main()
 {
- 
+
   RCC::AHB1ENR::GPIOAEN::Enable::Set();         // Подать тактирование на порт A
   RCC::AHB1ENR::GPIOBEN::Enable::Set();         // Подать тактирование на порт B
   
@@ -69,7 +68,6 @@ int main()
   RCC::APB2ENR::ADC1EN::Enable::Set();       // подали тактирование на АЦП
   RCC::AHB1ENR::DMA2EN::Enable::Set();       // подали тактирование на ДМА
   adc.Start();
-
   ADC1::CR1::RES::Bits12::Set();             // разрядность АЦП   
   ADC1::CR1::SCAN::Enable::Set();            // режим сканирования
 
@@ -78,19 +76,15 @@ int main()
   ADC1::CR2::DDS::DMARequest::Set();
   ADC1::CR2::ADON::Enable::Set();
   ADC1::CR2::SWSTART::On::Set();
-  
   //-----------------------------Таймер в режиме захвата------------------------
   GPIOB::MODER::MODER4::Alternate::Set();
   GPIOB::AFRL::AFRL4::Af2::Set();
   
   // для проверки таймера захвата подадим на пин PC9 тактирование - зажгём светодиод
-   // RCC::AHB1ENR::GPIOCEN::Enable::Set(); // подали питание на порт с
-   // GPIOC::MODER::MODER9::Output::Set(); // настроили порт С9 на выход
+  RCC::AHB1ENR::GPIOCEN::Enable::Set(); // подали питание на порт с
+  GPIOC::MODER::MODER9::Output::Set(); // настроили порт С9 на выходя знаю уже где
 
-    
-  RCC::APB1RSTR::TIM3RST::Reset::Set();   // сброс таймера
   RCC::APB1ENR::TIM3EN::Enable::Set();       // подали тактирование на таймер TIM3
- // RCC::AHB1ENR::DMA1EN::Enable::Set();       // подали тактирование на ДМА
 
   TIM3::CCMR1_Input::CC1S::Value1::Set();                 // определяет направление канала
   TIM3::CCMR1_Input::IC1F::Value1::Set();                 // фильтрация входа
@@ -99,30 +93,23 @@ int main()
   TIM3::CCER::CC1P::Value0::Set();
   TIM3::CCER::CC1NP::Value0::Set();
   
+  
   TIM3::CCER::CC1E::Value1::Set();                          // захват включён
   
-  TIM3::ARR::Write(10);// 10 милисекунд                  // Максимальное значние таймера до которого он считает
   TIM3::CNT::Write(0);
   TIM3::SR::UIF::NoInterruptPending::Set();             // скинули флаг
-  TIM3::CR1::CEN::Value1::Set();                        // включение счётчика
-  TIM3::PSC::Write(Timer3Prescaller);                   // делитель частоты
- 
+  
+  NVIC::ISER0::Write(1U << 29U);  // разрешить глобальное прерывание, где 29 - позиция таймера TIM3, ISER1 хранит только 32 значения, затем идёт ISER2, который хранит следующие 32 значения и т.д.
   TIM3::DIER::CC1IE::Value1::Set();                         // прерывание разрешено
-  TIM3::DIER::CC1DE::Value1::Set();                         // ДМА включён
-  NVIC::ISER1::Write(1U << 29U);  // разрешить глобальное прерывание, где 29 - позиция таймера TIM3, ISER1 хранит только 32 значения, затем идёт ISER2, который хранит следующие 32 значения и т.д.
+  
+  TIM3::PSC::Write(Timer3Prescaller);                   // делитель частоты
+  TIM3::CR1::CEN::Value1::Set();                        // включение счётчика
   
   //---------------------------Создание задач-----------------------------------
   OsWrapper::Rtos::CreateThread(temperatureTask, "TemperatureTask"); 
   OsWrapper::Rtos::CreateThread(flowTask, "flowTask"); 
   OsWrapper::Rtos::Start();
-  
-  for(;;)  
-  { 
-   
-    float temperatureWithADC = temperature.Calculate();
-    float ConsumptionWithFlowmeter = waterConsumption.Calculate();
-    
-  }
+
   
   
 

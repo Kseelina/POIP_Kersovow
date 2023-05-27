@@ -4,6 +4,7 @@
 #include <cstdint>
 #include "IDataSource.h"  
 
+// Класс, который измеряет количесвто передних фронтов, приходящего сигнала
 class Flowmeter: public IDataSource 
 {
 public:
@@ -12,7 +13,8 @@ public:
   void ReStart(); 
 private:
   IDataSource& _dataSource; 
-  float oldValue;
+  float oldValue = 0.0f;
+  
 };
 
 #endif

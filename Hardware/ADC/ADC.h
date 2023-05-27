@@ -3,7 +3,9 @@
 
 #include <cstdint>
 #include "IDataSource.h"  
+#include "ConfigDMA.h"
 
+// Класс, который получает значение с АЦП
 class ADC: public IDataSource
 {
 public:
@@ -12,7 +14,7 @@ public:
   void Start();
   
 private:
-  std::uint32_t code;
+  volatile const std::uint32_t code;
 
 };
 

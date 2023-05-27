@@ -860,8 +860,8 @@ class WaterConsumption
 {
   - s: int16_t
   - R: float
-  - _numberTopsFronts: IDataSource
-  + Flow(numberTopsFronts: IDataSource)
+  - _dataSource: IDataSource
+  + Flow(dataSource: IDataSource)
 }
 
 class Temperature
@@ -880,10 +880,16 @@ class IDataSource
 
 class Flowmeter
 {
-  - numberTopsFronts: uint32_t
-  + Flowmeter()
-  + Start():void
-  + Stop():void
+  - _dataSource: IDataSource
+  - oldValue: float
+  + Flowmeter(dataSource: IDataSource)
+  + GetData(): float
+}
+
+class TimerCCR
+{
+  - counter: uint32_t
+  + InterruptProcessing():void
 }
 
 class Resistor
@@ -919,10 +925,12 @@ FlowTask o-- IMeasureParameter
 IMeasureParameter <|-- WaterConsumption
 WaterConsumption o-- IDataSource
 IDataSource <|-- Flowmeter
+IDataSource <|-- TimerCCR
 
 CurrentPowerRegulationTask o-- PWM
 PWM o-- CurrentControler
 CurrentControler o-- IMeasureParameter
+IDataSource <|-- CurrentControler
 
 DataTransferTask o-- Modbus
 Modbus o-- IDataSource

@@ -46,7 +46,7 @@ InterruptHandler::DummyHandler, //DMA1 Stream 0
 InterruptHandler::DummyHandler, //DMA1 Stream 1
 InterruptHandler::DummyHandler, //DMA1 Stream 2
 InterruptHandler::DummyHandler, //DMA1 Stream 3
-InterruptHandler::TIM3_CCR, //DMA1 Stream 4
+InterruptHandler::DummyHandler, //DMA1 Stream 4
 InterruptHandler::DummyHandler, //DMA1 Stream 5
 InterruptHandler::DummyHandler, //DMA1 Stream 6
 InterruptHandler::DummyHandler, //ADC1, 18 строка от системного таймера
@@ -60,7 +60,7 @@ InterruptHandler::DummyHandler, //TIM10/TIM1 Update interrupt
 InterruptHandler::DummyHandler, //TIM11/TIM1 Trigger/Commutation interrupts
 InterruptHandler::DummyHandler, //TIM1 Capture Compare interrupt
 InterruptHandler::DummyHandler, // TIM2, 28 строка от системного таймера
-InterruptHandler::TIM3_CCR, // TIM3
+InterruptHandler::TIM3InterruptHandler, // TIM3
 InterruptHandler::DummyHandler, ////TIM4
 InterruptHandler::DummyHandler,
 InterruptHandler::DummyHandler,

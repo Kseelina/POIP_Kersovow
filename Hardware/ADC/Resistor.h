@@ -3,6 +3,7 @@
 
 #include "IDataSource.h"  // для IDataSource
 
+// Класс, который пересчитывает значение code АЦП в сопротивление
 class Resistor: public IDataSource
 {
 public:

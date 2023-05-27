@@ -4,7 +4,7 @@
 #include "Thread.hpp"
 #include "IMeasureParameter.h"
 
-class FlowTask: public OsWrapper::Thread<128> 
+class FlowTask: public OsWrapper::Thread<1024> 
 {
 public:
 

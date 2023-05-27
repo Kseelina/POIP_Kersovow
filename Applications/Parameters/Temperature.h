@@ -4,6 +4,7 @@
 #include "IMeasureParameter.h" // для IMeasureParameter
 #include "IDataSource.h"       // для IDataSource
 
+// Класс, который переводит сопротивление на резисторе в температуру
 class Temperature: public IMeasureParameter
 {
 public: 

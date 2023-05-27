@@ -2,7 +2,7 @@
 #define IMEASUREPARAMETER_H
 
 
-
+// »нтерфейсный класс, который имеет переопредел€ющийс€ метод считать
 class IMeasureParameter
 {
 public:
