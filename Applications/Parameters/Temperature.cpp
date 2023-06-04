@@ -10,5 +10,6 @@ float Temperature::Calculate()
 {
   
  float T = At + _resistor.GetData() * Bt + _resistor.GetData()*_resistor.GetData() * Ct ;
+ _temp = T;
  return T;
 }

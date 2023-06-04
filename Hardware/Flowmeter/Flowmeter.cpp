@@ -6,19 +6,26 @@ Flowmeter::Flowmeter(IDataSource& dataSource): _dataSource(dataSource)
  {
     
  }
-// Метод, который расчитывает количесвто передних фронтов, прошедших за секунду
+ 
+ // Метод, который расчитывает количесвто передних фронтов, прошедших за время спяки задачи FlowTask
+ float Flowmeter::Calculate()
+ {
+   float currentValue = _dataSource.GetData();  
+   float result = currentValue - oldValue;
+   if (result < 0)  // проверка на отрицательность
+   {
+     result = oldValue - currentValue;
+   }
+   oldValue = currentValue;
+  
+   _currentFlow = result; 
+   return result;
+ }
+ 
 float Flowmeter::GetData()
 { 
-  float currentValue = _dataSource.GetData();  
-  float result = currentValue - oldValue;
-  if (result < 0)  // проверка на отрицательность
-  {
-    result = oldValue - currentValue;
-  }
-  oldValue = currentValue;
-
   //std::cout << result << std::endl;
-  return result;
+  return _currentFlow;;
 } 
 
 

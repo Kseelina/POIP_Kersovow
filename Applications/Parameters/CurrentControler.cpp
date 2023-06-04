@@ -1,39 +1,32 @@
 #include "CurrentControler.h"
 
-CurrentControler::CurrentControler(IDataSource& flowRate): _flowRate(flowRate)
+CurrentControler::CurrentControler(IDataSource& flowRate, IDataSource& temp): 
+  _flowRate(flowRate), _temp(temp)
 {
    
 }
- /*
-// Метод, который расчитывает необходимую мощность для элементов Пельтье
-float CurrentControler::Calculate()
-{
-
-  if (MovingAverage() == 0)
-  {
-    
-  }
-  else 
-  {
-    P = K_p + e;
-    I = I_(i-1) + K_i*e;
-    D = K_d *(e - e_(i-1)) ;
-    Duty = P + I + D;
-    
-  }
-  return I = Ai * duty;
-} 
-*/
+ 
  //Метод, который расчитывает скользящее среднее
 float CurrentControler::MovingAverage()
 {
- CurrentValueSum -= arr[arrIndex];
- arr[arrIndex] = _flowRate.GetData();
- CurrentValueSum += _flowRate.GetData();
- arrIndex++;
- if (arrIndex >= movingAverage) 
- {
-   arrIndex = 0;
- }  
-   return (CurrentValueSum / movingAverage);
+ auto newValue =  _flowRate.GetData();
+ oldValue = oldValue + (newValue - oldValue)* 0.25f; // 0.25 потому что 4 измерения производится
+   
+ return oldValue;
+}
+
+// Метод, который рассчитывает силу тока
+float CurrentControler::GetData() 
+{
+  float I = 0.0f;
+  if (MovingAverage() <= 1.0f)
+  {
+    I = 0.0f;
+  }
+  else 
+  {
+    I = _temp.GetData() * Ai + duty;
+  }
+
+  return I;
 }

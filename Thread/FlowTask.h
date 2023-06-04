@@ -3,11 +3,10 @@
 
 #include "Thread.hpp"
 #include "IMeasureParameter.h"
-
+// задача, которая расчитывает расход воы
 class FlowTask: public OsWrapper::Thread<1024> 
 {
 public:
-
   FlowTask(IMeasureParameter& parameter); 
   void Execute() override; 
     

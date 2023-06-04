@@ -3,7 +3,7 @@
 
 #include "IDataSource.h"
 
-//  ласс, который считает 
+//  ласс, который считает кличество пришедших импульсов
 // template<typename TTimer>
 class TimerCCR: public IDataSource
 {
@@ -21,7 +21,7 @@ public:
   };
   
 private:
-  std::uint32_t counter;
+  volatile std::uint32_t counter;
 };
 extern TimerCCR tim ; // информаци€ о том, что где-то в другом месте объ€влен объект "tim" класса "TimerCCR"
 #endif

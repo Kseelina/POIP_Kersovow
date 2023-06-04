@@ -6,5 +6,8 @@
     <project>
         <path>$WS_DIR$\Kursovow.ewp</path>
     </project>
+    <project>
+        <path>$WS_DIR$\..\..\Rabots\Volatail\Volatail.ewp</path>
+    </project>
     <batchBuild />
 </workspace>

@@ -4,7 +4,7 @@
 #include "ConfigDMA.h"
 #include "nvicregisters.hpp"                      // для объявления глобальных прерываний
 #include "interrupthandler.hpp"                   // библиотека векторов прерываний
-//#include "StartUp.cpp"                            // для прерываний  
+ 
 //----------------------------Стандартные библиотеки С++------------------------
 #include <iostream> // подключение стандартной библиотеки С++
  
@@ -28,6 +28,7 @@
 //=================================ШИМ==========================================
 #include "CurrentControler.h"   
 #include "PWM.h"  
+#include "tim1registers.hpp"               // библиотека для TIM1
 //=================================ModBus=======================================
 #include "Modbus.h"
 #include "IDataSource.h"
@@ -35,7 +36,7 @@
 #include "rtos.hpp"
 #include "TemperatureTask.h" 
 //#include "DataTransferTask.h"   
-//#include "CurrentPowerRegulationTask.h"   
+#include "CurrentPowerRegulationTask.h"   
 #include "FlowTask.h"   
 
 std::uint32_t SystemCoreClock = 16'000'000U;    // тактирование внутреннего генератора, 1 такт = 8 000 000 Гц = 1 сек
@@ -51,8 +52,13 @@ std::uint32_t Timer3Prescaller = SystemCoreClock / OneMillisecondRation; // 1 мл
   
   TimerCCR tim;
   Flowmeter flow(static_cast<IDataSource&>(tim));
-  WaterConsumtion waterConsumption(static_cast<IDataSource&>(flow));
+  WaterConsumtion waterConsumption(static_cast<IMeasureParameter&>(flow));
   FlowTask flowTask(waterConsumption);
+  
+  CurrentControler controler(static_cast<IDataSource&>(waterConsumption), static_cast<IDataSource&>(temperature));
+  PWM pwm(static_cast<IDataSource&>(controler));
+  CurrentPowerRegulationTask currentPWM(pwm);
+  
 //------------------------------------------------------------------------------  
 
 //------------------------------------------------------------------------------ 
@@ -80,9 +86,9 @@ int main()
   GPIOB::MODER::MODER4::Alternate::Set();
   GPIOB::AFRL::AFRL4::Af2::Set();
   
-  // для проверки таймера захвата подадим на пин PC9 тактирование - зажгём светодиод
+  // для проверки таймера захвата подадим на пин PC9 тактирование - засветим светодиод
   RCC::AHB1ENR::GPIOCEN::Enable::Set(); // подали питание на порт с
-  GPIOC::MODER::MODER9::Output::Set(); // настроили порт С9 на выходя знаю уже где
+  GPIOC::MODER::MODER9::Output::Set(); // настроили порт С9 на выход
 
   RCC::APB1ENR::TIM3EN::Enable::Set();       // подали тактирование на таймер TIM3
 
@@ -103,14 +109,32 @@ int main()
   TIM3::DIER::CC1IE::Value1::Set();                         // прерывание разрешено
   
   TIM3::PSC::Write(Timer3Prescaller);                   // делитель частоты
-  TIM3::CR1::CEN::Value1::Set();                        // включение счётчика
+
+  
+  //----------------------------------ШИМ---------------------------------------
+  GPIOC::MODER::MODER7::Alternate::Set();
+  GPIOC::AFRL::AFRL7::Af2::Set();
+
+  // настройка ШИМ для 4 канала
+  TIM3::CCMR1_Output::OC2M::Value6::Set();   
+  TIM3::CCMR1_Output::OC2PE::Value1::Set(); 
+  TIM3::ARR::Write(100);
+  TIM3::CCR2::Write(10);  
+  TIM3::CCER::CC2E::Value1::Set();          // разрешаем работу таймера
+
+  TIM3::CR1::CEN::Value1::Set();           // включение счётчика      
   
   //---------------------------Создание задач-----------------------------------
   OsWrapper::Rtos::CreateThread(temperatureTask, "TemperatureTask"); 
   OsWrapper::Rtos::CreateThread(flowTask, "flowTask"); 
+  OsWrapper::Rtos::CreateThread(currentPWM, "currentPWM"); 
   OsWrapper::Rtos::Start();
 
-  
+// Макрос assert используется для выявления ошибок логики во время разработки программы. 
+// аргумент assert(expression) принимает значение false только в том случае, если программа работает неправильно.
+// другими словами, следующая строча кода не должна никогда выполняться, если вызовится ошибка от assert, то программа работает неправильно.
+  assert(false); 
+  return 0;
   
 
   

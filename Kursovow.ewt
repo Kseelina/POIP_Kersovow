@@ -2862,6 +2862,9 @@
         <group>
             <name>Parameters</name>
             <file>
+                <name>$PROJ_DIR$\Applications\Parameters\CurrentControler.cpp</name>
+            </file>
+            <file>
                 <name>$PROJ_DIR$\Applications\Parameters\CurrentControler.h</name>
             </file>
             <file>
@@ -2946,6 +2949,9 @@
         <group>
             <name>DMA</name>
             <file>
+                <name>$PROJ_DIR$\Hardware\DMA\ConfigDMA.h</name>
+            </file>
+            <file>
                 <name>$PROJ_DIR$\Hardware\DMA\DMA.h</name>
             </file>
         </group>
@@ -2957,15 +2963,12 @@
             <file>
                 <name>$PROJ_DIR$\Hardware\Flowmeter\Flowmeter.h</name>
             </file>
-            <file>
-                <name>$PROJ_DIR$\Hardware\Flowmeter\Front.cpp</name>
-            </file>
-            <file>
-                <name>$PROJ_DIR$\Hardware\Flowmeter\Front.h</name>
-            </file>
         </group>
         <group>
             <name>PWM</name>
+            <file>
+                <name>$PROJ_DIR$\Hardware\PWM\PWM.cpp</name>
+            </file>
             <file>
                 <name>$PROJ_DIR$\Hardware\PWM\PWM.h</name>
             </file>
@@ -2973,7 +2976,7 @@
         <group>
             <name>TIM</name>
             <file>
-                <name>$PROJ_DIR$\Hardware\TIM\TIM3_CCR.h</name>
+                <name>$PROJ_DIR$\Hardware\TIM\TimerCCR.h</name>
             </file>
         </group>
     </group>
@@ -3106,6 +3109,9 @@
     <group>
         <name>Thread</name>
         <file>
+            <name>$PROJ_DIR$\Thread\CurrentPowerRegulationTask.cpp</name>
+        </file>
+        <file>
             <name>$PROJ_DIR$\Thread\CurrentPowerRegulationTask.h</name>
         </file>
         <file>
@@ -3124,6 +3130,9 @@
             <name>$PROJ_DIR$\Thread\TemperatureTask.h</name>
         </file>
     </group>
+    <file>
+        <name>$PROJ_DIR$\interrupthandler.hpp</name>
+    </file>
     <file>
         <name>$PROJ_DIR$\main.cpp</name>
     </file>

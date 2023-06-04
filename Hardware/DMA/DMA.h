@@ -24,8 +24,8 @@ public:
   // Метод, который Останавливает ДМА
   static void Disable()
   {
-      DMA1::S4CR::EN::Disabled::Set();             // выключение потока
-      DMA2::S0CR::EN::Disabled::Set();             // выключение потока
+      TDmaConfig::ChannelDisable::Set(); 
+      TDmaConfig::DmaDisable::Set();
   };
 };
 

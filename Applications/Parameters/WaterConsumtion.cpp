@@ -1,7 +1,7 @@
 #include "WaterConsumtion.h"
 
 // контруктор, содержащий ссылку на данные о количесвте передних фронтов, прошедших за секунду
-WaterConsumtion::WaterConsumtion(IDataSource& dataSource): _dataSource(dataSource) 
+WaterConsumtion::WaterConsumtion(IMeasureParameter& dataSource): _dataSource(dataSource) 
 {
    
 }
@@ -9,6 +9,7 @@ WaterConsumtion::WaterConsumtion(IDataSource& dataSource): _dataSource(dataSourc
 // Метод, который расчитывает скорость потока в литрах/минуту
 float WaterConsumtion::Calculate()
 {
- float flowRate = (_dataSource.GetData() * s) / R ;
+ float flowRate = (_dataSource.Calculate() * s) / R ;
+ _flowConsumption = flowRate;
  return flowRate;
 }

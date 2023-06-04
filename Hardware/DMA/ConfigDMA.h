@@ -4,15 +4,17 @@
 #include "DMA.h"
 
 template < typename TDmaChannelConfigRegValue, typename TDmaDataReceivingReg, 
-           typename TDataSendingReg, typename TDataCountReg >
+           typename TDataSendingReg, typename TDataCountReg,
+            typename TDmaChannelDisable, typename TDmaDmaDisable >
 struct tDmaConfig 
 { 
   using channelConfigRegValue = TDmaChannelConfigRegValue; 
   using dataReceivingReg = TDmaDataReceivingReg; 
   using dataSendingReg = TDataSendingReg; 
   using dataSizeReg = TDataCountReg; 
+  using ChannelDisable = TDmaChannelDisable;
+  using DmaDisable = TDmaDmaDisable;
 };
-
 
 using tAdcDmaConfig = tDmaConfig 
   <
@@ -30,6 +32,8 @@ using tAdcDmaConfig = tDmaConfig
     >,
   DMA2::S0M0AR, 
   DMA2::S0PAR, 
-  DMA2::S0NDTR
+  DMA2::S0NDTR,
+  DMA2::S0CR::EN::Disabled,  
+  DMA2::S0CR::CIRC::Disabled  
 >;
 #endif

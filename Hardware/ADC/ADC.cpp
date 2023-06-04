@@ -20,5 +20,5 @@ float ADC::GetData()
 // Метод, который запускает ДМА для взятия оттуда значения с АЦП
 void ADC::Start()
 {
-  tDMA::ConfigureADC(reinterpret_cast<std::uint32_t>(&code), ADC1::DR::Address, 1); // 
+  tDMA::ConfigureADC(reinterpret_cast<std::uint32_t>(&code), ADC1::DR::Address, 1); 
 }

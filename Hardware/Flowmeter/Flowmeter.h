@@ -3,17 +3,20 @@
 
 #include <cstdint>
 #include "IDataSource.h"  
+#include "IMeasureParameter.h"
 
 // Класс, который измеряет количесвто передних фронтов, приходящего сигнала
-class Flowmeter: public IDataSource 
+class Flowmeter: public IDataSource, public IMeasureParameter 
 {
 public:
   Flowmeter(IDataSource& dataSource);
+  
   float GetData() override;
-  void ReStart(); 
+  float Calculate() override; 
 private:
   IDataSource& _dataSource; 
   float oldValue = 0.0f;
+  float _currentFlow;
   
 };
 
